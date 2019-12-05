@@ -1,0 +1,183 @@
+
+
+global GroupSize
+int 1
+==
+bnz oneTx
+
+global GroupSize
+int 2
+==
+
+txn GroupIndex
+int 1
+==
+&&
+
+txn TypeEnum
+int 4 
+==
+&&
+
+gtxn 0 TypeEnum
+int 4 
+==
+&&
+
+txn AssetAmount
+int 0
+>
+&&
+
+txn XferAsset
+int 10623
+==
+&&
+
+gtxn 0 XferAsset
+int 3797
+==
+&&
+
+txn AssetSender
+global ZeroAddress
+==
+&&
+
+txn AssetCloseTo
+global ZeroAddress
+==
+&&
+
+gtxn 0 AssetReceiver
+txn Sender
+==
+&&
+
+gtxn 0 AssetAmount
+int 1
+mulw 
+store 2 
+store 1 
+
+txn AssetAmount
+int 5
+mulw
+store 4 
+store 3 
+
+load 1
+load 3             
+>
+bnz done
+
+load 1
+load 3
+==
+load 2
+load 4
+>=
+&& 
+bnz done
+err 
+
+oneTx:
+
+txn TypeEnum
+int 1 
+==
+
+txn CloseRemainderTo
+addr PIRZO7JSVMVPZ7L2LR7WFSTAJXWKD2WB62ICCU5OJOP4CFCJ32CDZLQJFI
+==
+&&
+
+txn FirstValid
+int 20000000
+>
+&&
+
+txn Receiver
+global ZeroAddress
+==
+&&
+
+txn Amount
+int 0
+==
+&& 
+
+txn TypeEnum
+int 4 
+==
+
+txn AssetSender
+global ZeroAddress
+==
+&& 
+
+txn AssetAmount
+int 0
+==
+&& 
+
+txn XferAsset
+int 3797
+==
+
+txn XferAsset
+int 10623
+==
+|| 
+&&
+
+txn AssetCloseTo
+addr PIRZO7JSVMVPZ7L2LR7WFSTAJXWKD2WB62ICCU5OJOP4CFCJ32CDZLQJFI
+==
+
+txn FirstValid
+int 20000000
+>
+&&
+
+txn AssetReceiver
+global ZeroAddress
+==
+&& 
+
+txn AssetReceiver
+txn Sender
+==
+
+txn AssetCloseTo
+global ZeroAddress
+==
+&&
+
+txn Lease
+byte base64 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI=
+== 
+
+txn Lease
+byte base64 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAE=
+==
+||
+
+&&
+
+txn LastValid
+int 3445000
+<
+&& 
+
+|| 
+&& 
+
+|| 
+
+done:
+
+txn Fee
+int 2000
+<=
+&&
